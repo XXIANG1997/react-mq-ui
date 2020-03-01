@@ -1,5 +1,4 @@
 import React from "react";
-import "./assets/css/normalize.css";
 import "./App.css";
 
 function App() {
