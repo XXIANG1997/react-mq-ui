@@ -30,7 +30,6 @@
   @warning-box-shadow: 0 0 0 0.125em rgba(255, 221, 87, 0.25);
 
   outline: none;
-  font-size: 14px;
   padding: 0.4em 0.8em;
   display: inline-flex;
   justify-content: center;
@@ -41,7 +40,20 @@
   vertical-align: middle;
   color: white;
   border-radius: 4px;
-  margin: 0 @marginLeftRight;
+  margin: 10px @marginLeftRight;
+
+  &.@{buttonPrefix}-small {
+    font-size: 14px;
+  }
+
+  &.@{buttonPrefix}-medium {
+    font-size: 18px;
+  }
+
+  &.@{buttonPrefix}-large {
+    font-size: 22px;
+  }
+
 
   &.@{buttonPrefix}-block {
     display: flex;
@@ -115,12 +127,20 @@
       box-shadow: @shadow;
     }
 
-    &:hover {
-      background-color: @bg-hover-color;
+    &:not(:disabled) {
+      &:hover {
+        background-color: @bg-hover-color;
+      }
+
+      &:active {
+        background-color: @bg-active-color;
+      }
     }
 
-    &:active {
-      background-color: @bg-active-color;
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
     }
 
     &.@{buttonPrefix}-outlined {
@@ -137,12 +157,14 @@
         }
       }
 
-      &:hover {
-        background-color: @bg-color;
-        color: white;
+      &:not(:disabled) {
+        &:hover {
+          background-color: @bg-color;
+          color: white;
 
-        &.@{buttonPrefix}-dashed {
-          border: 1px dashed white;
+          &.@{buttonPrefix}-dashed {
+            border: 1px dashed white;
+          }
         }
       }
     }
@@ -155,14 +177,17 @@
       }
     }
 
-    &.@{buttonPrefix}-loading {
-      background-color: @bg-color;
-      .loading(white);
+    &:not(:disabled) {
+      &.@{buttonPrefix}-loading {
+        background-color: @bg-color;
+        .loading(white);
 
-      &.@{buttonPrefix}-dashed {
-        border: 1px dashed white;
+        &.@{buttonPrefix}-dashed {
+          border: 1px dashed white;
+        }
       }
     }
+
   }
 
   &.@{buttonPrefix}-primary {

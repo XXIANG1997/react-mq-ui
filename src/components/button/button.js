@@ -9,11 +9,12 @@ class Button extends React.Component {
 		this.classNames = cls(
 			"mq-button",
 			`${prefix}-${this.props.type}`,
+			`${prefix}-${this.props.size}`,
 			{[`${prefix}-loading`]: this.props.loading},
 			{[`${prefix}-dashed`]: this.props.dashed},
 			{[`${prefix}-block`]: this.props.block},
 			{[`${prefix}-outlined`]: this.props.outlined},
-			{[`${prefix}-rounded`]: this.props.rounded},
+			{[`${prefix}-rounded`]: this.props.rounded}
 		);
 
 		this.iconCls = cls(
@@ -25,7 +26,7 @@ class Button extends React.Component {
 	}
 
 	handleClick(event) {
-		this.props.onClick && this.props.onClick(event);
+		this.props.callback(event);
 	}
 
 	render() {
@@ -50,19 +51,36 @@ Button.defaultProps = {
 	icon: "",
 	iconPosition: "left",
 	outlined: false,
-	rounded: false
+	rounded: false,
+	size: "medium",
+	callback: function () {
+
+	}
 };
 
 Button.propTypes = {
-	type: PropTypes.oneOf(["default", "primary", "info", "success", "error", "warning"]).isRequired,
+	/** 按钮类型 */
+	type: PropTypes.oneOf(["default", "primary", "info", "success", "error", "warning"]),
+	/** 是否 loading */
 	loading: PropTypes.bool,
+	/** 禁用状态 */
 	disabled: PropTypes.bool,
+	/** 虚线框 */
 	dashed: PropTypes.bool,
+	/** 是否是一个block 元素（填满一行） */
 	block: PropTypes.bool,
+	/** 设置 icon */
 	icon: PropTypes.string,
+	/** icon 的位置 */
 	iconPosition: PropTypes.oneOf(["left", "right"]),
+	/** 是否为 outline 状态 */
 	outlined: PropTypes.bool,
-	rounded: PropTypes.bool
+	/** 圆形按钮 */
+	rounded: PropTypes.bool,
+	/** 按钮大小 */
+	size: PropTypes.oneOf(["small", "medium", "large"]),
+	/** callback 函数 */
+	callback: PropTypes.func
 };
 
 export default Button;
