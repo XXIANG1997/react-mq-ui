@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./assets/css/normalize.css";
+import "./assets/js/iconfont";
 import "./index.css";
 import App from "./App";
 
