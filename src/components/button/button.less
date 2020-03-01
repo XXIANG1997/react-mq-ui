@@ -1,0 +1,220 @@
+@import "../../assets/css/basic.less";
+
+@buttonPrefix: mq-button;
+@marginLeftRight: 20px;
+.@{buttonPrefix} {
+
+  @default-bg-color: #fff;
+  @primary-bg-color: #00d1b2;
+  @info-bg-color: #3298dc;
+  @success-bg-color: #48c774;
+  @warning-bg-color: #ffdd57;
+  @error-bg-color: #f14668;
+
+  @primary-hover-bg-color: #00c4a7;
+  @info-hover-bg-color: #2793da;
+  @success-hover-bg-color: #3ec46d;
+  @warning-hover-bg-color: #ffdb4a;
+  @error-hover-bg-color: #f03a5f;
+
+  @primary-active-bg-color: #00b89c;
+  @info-active-bg-color: #238cd1;
+  @success-active-bg-color: #3abb67;
+  @warning-active-bg-color: #ffd83d;
+  @error-active-bg-color: #ef2e55;
+
+  @primary-box-shadow: 0 0 0 0.125em rgba(0, 209, 178, 0.25);
+  @info-box-shadow: 0 0 0 0.125em rgba(50, 152, 220, 0.25);
+  @success-box-shadow: 0 0 0 0.125em rgba(72, 199, 116, 0.25);
+  @error-box-shadow: 0 0 0 0.125em rgba(241, 70, 104, 0.25);
+  @warning-box-shadow: 0 0 0 0.125em rgba(255, 221, 87, 0.25);
+
+  outline: none;
+  font-size: 14px;
+  padding: 0.4em 0.8em;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid transparent;
+  position: relative;
+  cursor: pointer;
+  vertical-align: middle;
+  color: white;
+  border-radius: 4px;
+  margin: 0 @marginLeftRight;
+
+  &.@{buttonPrefix}-block {
+    display: flex;
+    justify-content: center;
+    width: calc(100% - @marginLeftRight * 2);
+  }
+
+  &.@{buttonPrefix}-rounded {
+    border-radius: 290486px;
+  }
+
+  .mq-icon {
+    margin-right: 0.2em;
+
+    &.@{buttonPrefix}-icon-right {
+      order: 2;
+      margin-right: 0;
+      margin-left: 0.2em;
+    }
+  }
+
+  &.@{buttonPrefix}-default {
+    background-color: var(--default-bg-color);
+    border: 1px solid #dbdbdb;
+    color: #363636;
+
+    &:focus:not(:active) {
+      border-color: #3273dc;
+      box-shadow: 0 0 0 0.125em rgba(50, 115, 220, 0.25);
+    }
+
+    &:hover {
+      border-color: #b5b5b5;
+    }
+
+    &:active {
+      border-color: #4a4a4a;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+
+      &:hover {
+        background-color: var(--default-bg-color);
+        border-color: #dbdbdb;
+      }
+    }
+
+    &.@{buttonPrefix}-dashed {
+      border: 1px dashed #dbdbdb;
+
+      &:hover {
+        background-color: hsl(0, 0%, 96%);
+      }
+
+      &:active {
+        border-color: #4a4a4a;
+      }
+    }
+
+    &.@{buttonPrefix}-loading {
+      .loading(#dbdbdb)
+    }
+  }
+
+  .style(@bg-color, @bg-hover-color, @bg-active-color, @shadow) {
+    background-color: @bg-color;
+
+    &:focus:not(:active) {
+      box-shadow: @shadow;
+    }
+
+    &:hover {
+      background-color: @bg-hover-color;
+    }
+
+    &:active {
+      background-color: @bg-active-color;
+    }
+
+    &.@{buttonPrefix}-outlined {
+      border-color: @bg-color;
+      background-color: white;
+      color: @bg-color;
+
+      &:focus:not(:active) {
+        background-color: @bg-color;
+        color: white;
+
+        &.@{buttonPrefix}-dashed {
+          border: 1px dashed white;
+        }
+      }
+
+      &:hover {
+        background-color: @bg-color;
+        color: white;
+
+        &.@{buttonPrefix}-dashed {
+          border: 1px dashed white;
+        }
+      }
+    }
+
+    &.@{buttonPrefix}-dashed {
+      border: 1px dashed white;
+
+      &.@{buttonPrefix}-outlined {
+        border-color: @bg-color;
+      }
+    }
+
+    &.@{buttonPrefix}-loading {
+      background-color: @bg-color;
+      .loading(white);
+
+      &.@{buttonPrefix}-dashed {
+        border: 1px dashed white;
+      }
+    }
+  }
+
+  &.@{buttonPrefix}-primary {
+    .style(@primary-bg-color, @primary-hover-bg-color, @primary-active-bg-color, @primary-box-shadow);
+  }
+
+  &.@{buttonPrefix}-info {
+    .style(@info-bg-color, @info-hover-bg-color, @info-active-bg-color, @info-box-shadow)
+  }
+
+  &.@{buttonPrefix}-success {
+    .style(@success-bg-color, @success-hover-bg-color, @success-active-bg-color, @success-box-shadow);
+  }
+
+  &.@{buttonPrefix}-error {
+    .style(@error-bg-color, @error-hover-bg-color, @error-active-bg-color, @error-box-shadow);
+  }
+
+  &.@{buttonPrefix}-warning {
+    .style(@warning-bg-color, @warning-hover-bg-color, @warning-active-bg-color, @warning-box-shadow);
+    color: rgba(0, 0, 0, 0.7);
+  }
+
+}
+
+.loading(@color) {
+  pointer-events: none;
+  user-select: none;
+  color: transparent;
+  @keyframes loading {
+    0% {
+      transform: rotate(0deg);
+    }
+    50% {
+      transform: rotate(180deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  &::after {
+    animation: loading 0.5s infinite linear;
+    border: 2px solid @color;
+    border-radius: 50%;
+    border-right-color: transparent;
+    border-top-color: transparent;
+    content: "";
+    display: block;
+    height: 1em;
+    width: 1em;
+    left: calc(50% - (1em / 2) - 2px);
+    top: calc(50% - (1em / 2) - 2px);
+    position: absolute;
+  }
+}
