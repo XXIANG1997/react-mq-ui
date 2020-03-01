@@ -65,7 +65,8 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js"
+    "test": "node scripts/test.js",
+    "storybook": "start-storybook -p 9001 -c .storybook"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -83,9 +84,12 @@
     ]
   },
   "devDependencies": {
+    "@storybook/addon-info": "^5.3.14",
+    "@storybook/react": "^5.3.14",
     "classnames": "^2.2.6",
     "less": "^3.11.1",
-    "less-loader": "^5.0.0"
+    "less-loader": "^5.0.0",
+    "react-scripts": "^3.4.0"
   },
   "jest": {
     "roots": [
