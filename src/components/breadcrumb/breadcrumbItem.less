@@ -1,0 +1,42 @@
+@prefixCls: mq-breadcrumb-item;
+
+.@{prefixCls} {
+  flex-shrink: 0;
+  color: #3273dc;
+
+  .mq-icon {
+    margin-right: 5px;
+  }
+
+  .@{prefixCls}-link {
+    cursor: pointer;
+    text-decoration: none;
+    color: #3273dc;
+
+    &:hover {
+      color: hsl(0, 0%, 21%);
+    }
+
+
+    &.@{prefixCls}-link-active {
+      color: hsl(0, 0%, 21%);
+    }
+  }
+
+  .@{prefixCls}-wrapper {
+    cursor: pointer;
+
+    &:hover {
+      color: hsl(0, 0%, 21%);
+    }
+
+    &.@{prefixCls}-wrapper-active {
+      color: hsl(0, 0%, 21%);
+    }
+  }
+
+  .@{prefixCls}-separator {
+    margin: 0 5px;
+    color: hsl(0, 0%, 71%);
+  }
+}
