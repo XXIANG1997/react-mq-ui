@@ -117,7 +117,7 @@ class Pagination extends React.Component {
 				showPageItemAmount: pageItemTotal,
 				pageItemTotal,
 				pageItems: tempArray,
-				edgeCase: true
+				edgeCase: !this.props.simple
 			}, () => {
 				const callback = (currentPage) => {
 					this.setState({
@@ -129,7 +129,7 @@ class Pagination extends React.Component {
 		} else {
 			this.setState({
 				pageItemTotal,
-				normal: true
+				normal: !this.props.simple
 			}, () => {
 				const callback = (currentPage) => {
 					this.countItem(currentPage);
@@ -139,109 +139,72 @@ class Pagination extends React.Component {
 		}
 	};
 
+	switchTypes = (stats, separator) => {
+		const {normal, currentPage, pageItems, edgeCase, simple, pageItemTotal} = stats;
+		const prefixCls = "mq-pagination";
+		const simpleCls = "mq-pagination-simple";
+		if (normal) {
+			return pageItems.map((item, index) => <li
+				className={`${prefixCls}-item ${currentPage === item ? `${prefixCls}-item-active` : ""} ${item === separator ? `${prefixCls}-item-separator` : ""}`}
+				key={index}
+				onClick={() => {
+					this.selectItem(item);
+				}}>
+				{item}
+			</li>);
+		} else if (edgeCase) {
+			return pageItems.map((item, index) => <li
+				key={index}
+				className={`${prefixCls}-item ${currentPage === item ? `${prefixCls}-item-active` : ""}`}
+				onClick={() => {
+					this.selectItem(item);
+				}}
+			>
+				{item}
+			</li>);
+		} else if (simple) {
+			return <li className={`${simpleCls}-item`}>
+				<span className={`${simpleCls}-item-currentPage`}>{currentPage}</span>
+				<span> / </span>
+				<span>{pageItemTotal}</span>
+			</li>;
+		} else {
+			return null;
+		}
+	};
+
 	componentDidMount() {
 		this.initialData();
 	}
 
 	render() {
-		const {pageItems, currentPage, pageItemTotal, normal, simple, edgeCase} = this.state;
+		const {currentPage, pageItemTotal, simple} = this.state;
 		const {separator} = this.props;
 		const prefixCls = "mq-pagination";
 		const simpleCls = "mq-pagination-simple";
 
-		if (simple) {
-			return <ul className={`${simpleCls} ${simpleCls}-${this.props.size}`}>
-				<li
-					className={`${simpleCls}-previous ${currentPage === 1 ? `${simpleCls}-previous-disabled` : ""}`}>
-					<button className={currentPage === 1 ? "disabled" : ""}
-					        onClick={() => this.prevOrNext(-1)}>
-						<svg className='mq-icon' aria-hidden="true">
-							<use xlinkHref={"#icon-arrow-left"}/>
-						</svg>
-					</button>
-				</li>
-				<li className={`${simpleCls}-item`}>
-					<span className={`${simpleCls}-item-currentPage`}>{currentPage}</span>
-					<span> / </span>
-					<span>{pageItemTotal}</span>
-				</li>
-				<li
-					className={`${simpleCls}-next ${currentPage === pageItemTotal ? `${simpleCls}-next-disabled` : ""}`}>
-					<button className={currentPage === pageItemTotal ? "disabled" : ""}
-					        onClick={() => this.prevOrNext(+1)}>
-						<svg className='mq-icon' aria-hidden="true">
-							<use xlinkHref={"#icon-arrow-right"}/>
-						</svg>
-					</button>
-				</li>
-			</ul>;
-		}
-
-		if (normal) {
-			return <ul className={`${prefixCls} ${prefixCls}-${this.props.size}`}>
-				<li className={`${prefixCls}-previous ${currentPage === 1 ? `${prefixCls}-previous-disabled` : ""}`}>
-					<button className={currentPage === 1 ? "disabled" : ""}
-					        onClick={() => this.prevOrNext(-1)}
-					>
-						<svg className='mq-icon' aria-hidden="true">
-							<use xlinkHref={"#icon-arrow-left"}/>
-						</svg>
-					</button>
-				</li>
-				{
-					pageItems.map((item, index) => <li
-						className={`${prefixCls}-item ${currentPage === item ? `${prefixCls}-item-active` : ""} ${item === separator ? `${prefixCls}-item-separator` : ""}`}
-						key={index}
-						onClick={() => {
-							this.selectItem(item);
-						}}>
-						{item}
-					</li>)
-				}
-				<li className={`${prefixCls}-next ${currentPage === pageItemTotal ? `${prefixCls}-next-disabled` : ""}`}>
-					<button className={currentPage === pageItemTotal ? "disabled" : ""}
-					        onClick={() => this.prevOrNext(+1)}>
-						<svg className='mq-icon' aria-hidden="true">
-							<use xlinkHref={"#icon-arrow-right"}/>
-						</svg>
-					</button>
-				</li>
-			</ul>;
-		}
-
-		if (edgeCase) {
-			return <ul className={`${prefixCls} ${prefixCls}-${this.props.size}`}>
-				<li className={`${prefixCls}-previous ${currentPage === 1 ? `${prefixCls}-previous-disabled` : ""}`}>
-					<button className={currentPage === 1 ? "disabled" : ""}
-					        onClick={() => this.prevOrNext(-1)}
-					>
-						<svg className='mq-icon' aria-hidden="true">
-							<use xlinkHref={"#icon-arrow-left"}/>
-						</svg>
-					</button>
-				</li>
-				{
-					pageItems.map((item, index) => <li
-						key={index}
-						className={`${prefixCls}-item ${currentPage === item ? `${prefixCls}-item-active` : ""}`}
-						onClick={() => {
-							this.selectItem(item);
-						}}
-					>
-						{item}
-					</li>)
-				}
-				<li className={`${prefixCls}-next ${currentPage === pageItemTotal ? `${prefixCls}-next-disabled` : ""}`}>
-					<button className={currentPage === pageItemTotal ? "disabled" : ""}
-					        onClick={() => this.prevOrNext(+1)}>
-						<svg className='mq-icon' aria-hidden="true">
-							<use xlinkHref={"#icon-arrow-right"}/>
-						</svg>
-					</button>
-				</li>
-			</ul>;
-		}
-		return null;
+		return <ul className={`${simple ? simpleCls : prefixCls} ${simple ? simpleCls : prefixCls}-${this.props.size}`}>
+			<li className={`${simple ? simpleCls : prefixCls}-previous ${currentPage === 1 ? `${simple ? simpleCls : prefixCls}-previous-disabled` : ""}`}>
+				<button className={currentPage === 1 ? "disabled" : ""}
+				        onClick={() => this.prevOrNext(-1)}
+				>
+					<svg className='mq-icon' aria-hidden="true">
+						<use xlinkHref={"#icon-arrow-left"}/>
+					</svg>
+				</button>
+			</li>
+			{
+				this.switchTypes(this.state, separator)
+			}
+			<li className={`${simple ? simpleCls : prefixCls}-next ${currentPage === pageItemTotal ? `${simple ? simpleCls : prefixCls}-next-disabled` : ""}`}>
+				<button className={currentPage === pageItemTotal ? "disabled" : ""}
+				        onClick={() => this.prevOrNext(+1)}>
+					<svg className='mq-icon' aria-hidden="true">
+						<use xlinkHref={"#icon-arrow-right"}/>
+					</svg>
+				</button>
+			</li>
+		</ul>;
 	}
 }
 
