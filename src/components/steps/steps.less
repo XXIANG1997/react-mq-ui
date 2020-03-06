@@ -1,0 +1,161 @@
+@stepsClsPrefix: mq-steps;
+@stepClsPrefix: mq-step;
+
+.@{stepsClsPrefix} {
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+
+  &.@{stepsClsPrefix}-small {
+    font-size: 14px;
+  }
+
+  &.@{stepsClsPrefix}-medium {
+    font-size: 18px;
+  }
+
+  &.@{stepsClsPrefix}-large {
+    font-size: 22px;
+  }
+
+  .@{stepsClsPrefix}-header {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+
+    .child-width(@i) when (@i > 0) {
+      &.@{stepsClsPrefix}-have-@{i}-child {
+        .@{stepClsPrefix} {
+          width: (1 / @i) * 100%;
+        }
+      }
+      .child-width(@i - 1)
+    }
+
+    .child-width(10);
+
+    .@{stepClsPrefix} {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      line-height: 2;
+
+      .@{stepClsPrefix}-icon {
+        z-index: 10;
+
+        &.mq-icon {
+          font-size: 30px;
+        }
+      }
+
+      .@{stepClsPrefix}-description {
+        width: 95%;
+        word-break: break-all;
+        text-align: center;
+      }
+
+      .@{stepClsPrefix}-line-wrapper {
+        width: 85%;
+        margin: 0 7.5%;
+        position: absolute;
+        background-color: #e8e8e8;
+        height: 1px;
+        top: 13px;
+        left: -50%;
+
+        .@{stepClsPrefix}-line {
+          width: 0;
+          background-color: #00b89c;
+          height: 100%;
+          transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1)
+        }
+      }
+
+
+      &.@{stepClsPrefix}-active {
+        // active 状态下各种文本的颜色
+        color: #00b89c;
+
+        .@{stepClsPrefix}-description {
+          color: rgba(0, 0, 0, 0.65);
+        }
+
+        .@{stepClsPrefix}-line-wrapper {
+          .@{stepClsPrefix}-line {
+            width: 100%;
+          }
+        }
+
+        // active 状态下是 loading
+        &.@{stepClsPrefix}-loading {
+          @keyframes rotate {
+            0% {
+              transform: rotate(0deg);
+            }
+            50% {
+              transform: rotate(180deg);
+            }
+            100% {
+              transform: rotate(360deg);
+            }
+          }
+
+          .mq-icon {
+            animation: 2s rotate linear infinite;
+          }
+        }
+
+        // error 状态下的颜色
+        &.@{stepClsPrefix}-error {
+          color: rgb(241, 70, 104);
+
+          .@{stepClsPrefix}-line-wrapper {
+            .@{stepClsPrefix}-line {
+              background-color: rgb(241, 70, 104);
+            }
+          }
+        }
+
+        // warning 状态下的颜色
+        &.@{stepClsPrefix}-warning {
+          color: rgb(255, 221, 87);
+
+          .@{stepClsPrefix}-line-wrapper {
+            .@{stepClsPrefix}-line {
+              background-color: rgb(255, 221, 87);
+            }
+          }
+        }
+      }
+
+      // done 状态
+      &.@{stepClsPrefix}-done {
+        color: #00b89c;
+
+        .@{stepClsPrefix}-title {
+          color: rgba(0, 0, 0, 0.75);
+        }
+
+        .@{stepClsPrefix}-description {
+          color: rgba(0, 0, 0, 0.25);
+        }
+
+        .@{stepClsPrefix}-line-wrapper {
+          .@{stepClsPrefix}-line {
+            width: 100%;
+          }
+        }
+      }
+
+      // wait 状态
+      &.@{stepClsPrefix}-wait {
+        color: rgba(0, 0, 0, 0.25);
+      }
+    }
+  }
+}
+
