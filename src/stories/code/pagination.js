@@ -1,7 +1,7 @@
 import React from "react";
 import MqPagination from "../../components/pagination";
 
-const pagination = () => (
+const Pagination = () => (
 	<div>
 		<h2>basic usage</h2>
 		<MqPagination/>
@@ -26,4 +26,4 @@ const pagination = () => (
 	</div>
 );
 
-export default pagination;
+export default Pagination;
