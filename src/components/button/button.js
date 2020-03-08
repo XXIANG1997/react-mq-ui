@@ -26,6 +26,7 @@ class Button extends React.Component {
 	}
 
 	handleClick(event) {
+		if (this.props.loading) return; // 便于测试
 		this.props.callback(event);
 	}
 
@@ -53,8 +54,7 @@ Button.defaultProps = {
 	outlined: false,
 	rounded: false,
 	size: "medium",
-	callback: function () {
-
+	callback: () => {
 	}
 };
 
