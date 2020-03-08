@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../cuke-ui/.idea/cuke-ui.iml" filepath="$PROJECT_DIR$/../cuke-ui/.idea/cuke-ui.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/mq-ui.iml" filepath="$PROJECT_DIR$/.idea/mq-ui.iml" />
     </modules>
   </component>
