@@ -16,7 +16,7 @@ class Breadcrumb extends React.Component {
 			{
 				this.props.children.map((child, index) => {
 					if (index === childrenLength - 1) {
-						return child;
+						return React.cloneElement(child, {active: true, key: index});
 					}
 					return React.cloneElement(child, {separator: this.props.separator, key: index});
 				})

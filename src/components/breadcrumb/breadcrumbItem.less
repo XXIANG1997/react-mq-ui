@@ -17,22 +17,28 @@
       color: hsl(0, 0%, 21%);
     }
 
-
-    &.@{prefixCls}-link-active {
-      color: hsl(0, 0%, 21%);
-    }
   }
 
   .@{prefixCls}-wrapper {
-    cursor: pointer;
 
-    &:hover {
-      color: hsl(0, 0%, 21%);
+    a {
+      text-decoration: none;
+      cursor: pointer;
+      color: #3273dc;
+
+      &:visited {
+        color: #3273dc;
+      }
+
+      &:hover {
+        color: hsl(0, 0%, 21%);
+      }
     }
 
     &.@{prefixCls}-wrapper-active {
       color: hsl(0, 0%, 21%);
     }
+
   }
 
   .@{prefixCls}-separator {

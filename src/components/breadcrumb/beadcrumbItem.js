@@ -31,7 +31,7 @@ function BreadcrumbItem(props) {
 }
 
 BreadcrumbItem.propTypes = {
-	/** 分隔符（父元素传过来） */
+	/** 分隔符（父组件传过来） */
 	separator: PropTypes.string,
 	/** 设置 icon */
 	icon: PropTypes.string,
@@ -40,7 +40,7 @@ BreadcrumbItem.propTypes = {
 		PropTypes.string,
 		PropTypes.object
 	]),
-	/** 默认激活状态 */
+	/** 默认激活状态（父组件传过来） */
 	active: PropTypes.bool
 };
 
