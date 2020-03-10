@@ -108,6 +108,11 @@ class Pagination extends React.Component {
 		// 总共可显示 item 的数量
 		const pageItemTotal = Math.ceil(total / defaultPageSize);
 
+		// 确保总的页数 >= 默认每页可显示页数
+		if (total < defaultPageSize) {
+			throw new Error("总的页数小于每页可显示的页数");
+		}
+
 		if (pageItemTotal <= showPageItemAmount) {
 			const tempArray = [];
 			for (let i = 1; i <= pageItemTotal; i++) {
@@ -236,6 +241,7 @@ Pagination.defaultProps = {
 	simple: false,
 	total: 500,
 	callback: () => {
+		console.log("here");
 	}
 };
 
