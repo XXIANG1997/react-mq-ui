@@ -18,31 +18,6 @@ afterEach(() => {
 });
 
 describe("<Button>", () => {
-	test("should render a <Button /> components", () => {
-		const wrapper = eRender(
-			<div>
-				<Button type={"default"}>default</Button>
-				<Button type={"primary"}>primary</Button>
-				<Button type={"info"}>info</Button>
-				<Button type={"success"}>success</Button>
-				<Button type={"error"}>error</Button>
-				<Button type={"warning"}>warning</Button>
-
-				<Button loading>loading</Button>
-				<Button dashed>dashed</Button>
-				<Button outlined>outlined</Button>
-				<Button rounded>rounded</Button>
-				<Button block>block</Button>
-
-				<Button size={"small"}>small</Button>
-				<Button size={"large"}>large</Button>
-
-				<Button icon={"home"}>icon(left)</Button>
-				<Button icon={"home"} iconPosition={"right"}>icon(right)</Button>
-			</div>
-		);
-		expect(toJson(wrapper)).toMatchSnapshot();
-	});
 
 	test("<Button> have setting className", () => {
 		act(() => {
