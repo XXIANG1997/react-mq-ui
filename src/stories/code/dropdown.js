@@ -2,11 +2,17 @@ import React from "react";
 import { MqDropdown, MqMenu } from "../../components/dropdown";
 import { MqButton } from "../../components/button";
 
-const menu = <MqMenu>
-	<MqMenu.Item>Dropdown Item</MqMenu.Item>
-	<MqMenu.Item>Other dropdown Item</MqMenu.Item>
-	<MqMenu.Item>Active dropdown Item</MqMenu.Item>
-	<MqMenu.Item>Other dropdown Item</MqMenu.Item>
+const menu = <MqMenu callback={(name) => {
+	console.log(name);
+}}>
+	<MqMenu.Item name={1}>
+		<a href="https://www.baidu.com" target={"_blank"}>baidu</a>
+	</MqMenu.Item>
+	<MqMenu.Item name={2}>Other dropdown Item</MqMenu.Item>
+	<MqMenu.Item name={3}>
+		<a href="https://www.taobao.com" target={"_blank"}>taobao</a>
+	</MqMenu.Item>
+	<MqMenu.Item name={4}>Other dropdown Item</MqMenu.Item>
 </MqMenu>;
 
 const dropdown = () => (
@@ -34,6 +40,10 @@ const dropdown = () => (
 		</MqDropdown>
 		<MqDropdown position={"right"} overlay={menu} t triggerType={"hover"}>
 			<MqButton>right</MqButton>
+		</MqDropdown>
+		<h2>support callback</h2>
+		<MqDropdown position={"top"} margin={"20px"} overlay={menu} triggerType={"hover"}>
+			<MqButton>click Item to emit callback</MqButton>
 		</MqDropdown>
 		<h2>theme</h2>
 		<MqDropdown theme={"light"} position={"top"} margin={"20px"} overlay={menu} triggerType={"hover"}>
