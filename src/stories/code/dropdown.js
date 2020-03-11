@@ -45,6 +45,16 @@ const dropdown = () => (
 		<MqDropdown position={"top"} margin={"20px"} overlay={menu} triggerType={"hover"}>
 			<MqButton>click Item to emit callback</MqButton>
 		</MqDropdown>
+		<h2>size</h2>
+		<MqDropdown size={"small"} position={"top"} margin={"20px"} overlay={menu} triggerType={"hover"}>
+			<MqButton size={"small"}>small</MqButton>
+		</MqDropdown>
+		<MqDropdown size={"medium"} position={"top"} margin={"20px"} overlay={menu} triggerType={"hover"}>
+			<MqButton size={"medium"}>medium</MqButton>
+		</MqDropdown>
+		<MqDropdown size={"large"} position={"top"} margin={"20px"} overlay={menu} triggerType={"hover"}>
+			<MqButton size={"large"}>large</MqButton>
+		</MqDropdown>
 		<h2>theme</h2>
 		<MqDropdown theme={"light"} position={"top"} margin={"20px"} overlay={menu} triggerType={"hover"}>
 			<MqButton>light</MqButton>
