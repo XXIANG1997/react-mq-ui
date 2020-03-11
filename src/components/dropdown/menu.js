@@ -5,14 +5,16 @@ function Menu(props) {
 	const prefixCls = "mq-menu";
 	return <ul className={prefixCls}>
 		{props.children.map((child, index) => {
-			return React.cloneElement(child, {_callback: props.callback, key: index});
+			return React.cloneElement(child, {_callback: props.callback, _close: props._close, key: index});
 		})}
 	</ul>;
 }
 
 Menu.propTypes = {
 	/** callback 函数 */
-	callback: propTypes.func
+	callback: propTypes.func,
+	/** 关闭函数（dropdown 组件传过来的） */
+	_close: propTypes.func
 };
 
 Menu.defaultProps = {
@@ -22,7 +24,10 @@ Menu.defaultProps = {
 
 Menu.Item = (props) => {
 	const prefixItemCls = "mq-menu-item";
-	return <li onClick={() => props._callback(props.name)} className={prefixItemCls}>
+	return <li onClick={() => {
+		props._callback(props.name);
+		props._close();
+	}} className={prefixItemCls}>
 		{props.children}
 	</li>;
 };

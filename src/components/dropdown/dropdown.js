@@ -112,6 +112,12 @@ class Dropdown extends React.Component {
 		}
 	}
 
+	visibleFn = () => {
+		this.setState({
+			visible: false
+		});
+	};
+
 	componentWillUnmount() {
 		// 清除工作
 		window.clearTimeout(this.closeID);
@@ -139,7 +145,7 @@ class Dropdown extends React.Component {
 			     ref={menu}>
 				{/*unmountOnExit 是个神奇的属性*/}
 				<CSSTransition in={visible} unmountOnExit classNames={"fade"} timeout={250}>
-					{overlay}
+					{React.cloneElement(overlay, {_close: this.close})}
 				</CSSTransition>
 			</div>
 		</div>;
