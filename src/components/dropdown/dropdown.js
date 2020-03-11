@@ -112,12 +112,6 @@ class Dropdown extends React.Component {
 		}
 	}
 
-	visibleFn = () => {
-		this.setState({
-			visible: false
-		});
-	};
-
 	componentWillUnmount() {
 		// 清除工作
 		window.clearTimeout(this.closeID);
