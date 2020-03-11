@@ -3,7 +3,7 @@ import Dropdown from "../dropdown";
 import Menu from "../menu";
 import { mount } from "enzyme";
 
-describe("<Dropdown>", () => {
+describe("<Dropdown />", () => {
 	const menu = <Menu>
 		<Menu.Item>one</Menu.Item>
 		<Menu.Item>two</Menu.Item>
@@ -40,14 +40,5 @@ describe("<Dropdown>", () => {
 		expect(wrapper.props().triggerType).toBe("click");
 		expect(wrapper.props().margin).toBe("20");
 		wrapper.unmount();
-	});
-
-	test("show menu when click item", () => {
-		const wrapper = mount(
-			<Dropdown overlay={menu} position={"top"} size={"small"} theme={"light"} triggerType={"hover"}
-			          margin={"10"}>
-				<button>click me</button>
-			</Dropdown>
-		);
 	});
 });
