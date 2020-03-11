@@ -4,9 +4,18 @@ import propTypes from "prop-types";
 function Menu(props) {
 	const prefixCls = "mq-menu";
 	return <ul className={prefixCls}>
-		{props.children.map((child, index) => {
-			return React.cloneElement(child, {_callback: props.callback, _close: props._close, key: index});
-		})}
+		{
+			props.children &&
+			(
+				Array.isArray(props.children)
+					?
+					props.children.map((child, index) => {
+						return React.cloneElement(child, {_callback: props.callback, _close: props._close, key: index});
+					})
+					:
+					React.cloneElement(props.children, {_callback: props.callback, _close: props._close})
+			)
+		}
 	</ul>;
 }
 
