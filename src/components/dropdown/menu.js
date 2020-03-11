@@ -35,6 +35,8 @@ Menu.Item = (props) => {
 Menu.Item.propTypes = {
 	/** callback 函数（父组件传过来） */
 	_callback: propTypes.func,
+	/** 关闭函数（父组件传过来） */
+	_close: propTypes.func,
 	/** 触发回调时的 id */
 	name: propTypes.oneOfType([
 		propTypes.string,
