@@ -15,9 +15,13 @@ function Step(props) {
 }
 
 Step.propTypes = {
-	text: PropTypes.string.isRequired,
-	description: PropTypes.string.isRequired,
+	/** step 的标题 */
+	text: PropTypes.string,
+	/** step 的描述 */
+	description: PropTypes.string,
+	/** 以完成或者 active 的 icon */
 	icon: PropTypes.string,
+	/** 是否 active */
 	active: PropTypes.bool
 };
 

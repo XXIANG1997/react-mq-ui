@@ -107,9 +107,13 @@ class Steps extends React.Component {
 }
 
 Steps.propTypes = {
+	/** 当前的 step */
 	current: PropTypes.number,
+	/** 是否 loading */
 	showLoading: PropTypes.bool,
+	/** active 状态下 status */
 	status: PropTypes.oneOf(["error", "warning", ""]),
+	/** 大小 */
 	size: PropTypes.oneOf(["small", "medium", "large"])
 };
 
