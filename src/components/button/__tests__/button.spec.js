@@ -1,7 +1,5 @@
 import React from "react";
 import { act } from "react-dom/test-utils";
-import { render as eRender, shallow } from "enzyme";
-import toJson from "enzyme-to-json";
 import { render } from "react-dom";
 import Button from "../button";
 
