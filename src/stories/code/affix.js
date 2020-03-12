@@ -16,8 +16,22 @@ const Affix = () => (
 		<br/>
 		<br/>
 		<br/>
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+		<h2>setting offset（top ）</h2>
 		<MqAffix topOffset={0}>
-			<MqButton>affix 固钉组件</MqButton>
+			<MqButton>affix 固钉组件（top = 0）</MqButton>
+		</MqAffix>
+		<MqAffix topOffset={10}>
+			<MqButton>affix 固钉组件（top = 10）</MqButton>
+		</MqAffix>
+		<MqAffix topOffset={20}>
+			<MqButton>affix 固钉组件（top = 20）</MqButton>
 		</MqAffix>
 		<br/>
 		<br/>
@@ -37,9 +51,12 @@ const Affix = () => (
 		<br/>
 		<br/>
 		<br/>
-		<br/>
-		<MqAffix topOffset={100}>
-			<MqButton>affix 固钉组件(topOffset = 100)</MqButton>
+		<h2>trigger callback</h2>
+		<MqAffix topOffset={200} callback={(type) => console.log(type)}>
+			<MqButton>在（top = 200）处触发回调</MqButton>
+		</MqAffix>
+		<MqAffix bottomOffset={150} callback={(type) => console.log(type)}>
+			<MqButton>在（bottom = 150）处触发回调</MqButton>
 		</MqAffix>
 		<br/>
 		<br/>
@@ -59,43 +76,22 @@ const Affix = () => (
 		<br/>
 		<br/>
 		<br/>
-		<br/>
-		<br/>
-		<br/>
-		<br/>
-		<br/>
-		<br/>
-		<br/>
-		<br/>
-		<br/>
-		<br/>
-		<br/>
-		<br/>
-		<br/>
-		<br/>
-		<br/>
-		<br/>
-		<br/>
-		<br/>
-		<br/>
-		<br/>
-		<br/>
-		<br/>
-		<br/>
-		<br/>
-		<br/>
-		<br/>
-		<br/>
-		<br/>
-		<br/>
-		<br/>
-		<br/>
-		<br/>
-		<br/>
-		<br/>
-		<MqAffix bottomOffset={100}>
-			<MqButton>affix 固钉组件 (bottomOffset = 100)</MqButton>
+		<h2>setting offset（bottom）</h2>
+		<MqAffix bottomOffset={0}>
+			<MqButton>affix 固钉组件（bottom = 0）</MqButton>
 		</MqAffix>
+		<MqAffix bottomOffset={10}>
+			<MqButton>affix 固钉组件（bottom = 10）</MqButton>
+		</MqAffix>
+		<MqAffix bottomOffset={20}>
+			<MqButton>affix 固钉组件（bottom = 20）</MqButton>
+		</MqAffix>
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+		<br/>
 		<br/>
 		<br/>
 		<br/>
