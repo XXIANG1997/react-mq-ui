@@ -9,41 +9,41 @@ class Affix extends React.Component {
 		this.state = {
 			execTopCallback: true,
 			execBottomCallback: true,
-			isTopEmit: false,
-			isBottomEmit: false
+			topCallbackEmitted: false,
+			bottomCallbackEmitted: false
 		};
 	}
 
 	componentDidMount() {
 		const affix = this.affix.current;
-		this.props.topOffset !== -1 && (affix.style.top = this.props.topOffset + "px");
-		this.props.bottomOffset !== -1 && (affix.style.bottom = this.props.bottomOffset + "px");
+		(typeof this.props.topOffset === "number") && (affix.style.top = this.props.topOffset + "px");
+		(typeof this.props.bottomOffset === "number") && (affix.style.bottom = this.props.bottomOffset + "px");
 		this.listener = () => {
-			if (this.props.topOffset >= 0) {
+			if (typeof this.props.topOffset === "number") {
 				if (this.affix.current.getBoundingClientRect()["top"] === this.props.topOffset) {
 					if (this.state.execTopCallback) {
 						this.props.callback("top");
 						this.setState({
 							execTopCallback: false,
-							isTopEmit: true
+							topCallbackEmitted: true
 						});
 					}
-				} else if (this.state.isTopEmit && this.affix.current.getBoundingClientRect()["top"] > this.props.topOffset) {
+				} else if (this.state.topCallbackEmitted && this.affix.current.getBoundingClientRect()["top"] > this.props.topOffset) {
 					this.setState({
 						execTopCallback: true
 					});
 				}
 			}
-			if (this.props.bottomOffset >= 0) {
-				if (this.affix.current.getBoundingClientRect()["bottom"] + this.props.bottomOffset === window.innerHeight) {
+			if (typeof this.props.bottomOffset === "number") {
+				if ((this.affix.current.getBoundingClientRect()["bottom"] + this.props.bottomOffset) === window.innerHeight) {
 					if (this.state.execBottomCallback) {
 						this.props.callback("bottom");
 						this.setState({
 							execBottomCallback: false,
-							isBottomEmit: true
+							bottomCallbackEmitted: true
 						});
 					}
-				} else if (this.state.isBottomEmit && (window.innerHeight - this.affix.current.getBoundingClientRect()["bottom"]) > this.props.topOffset) {
+				} else if (this.state.bottomCallbackEmitted && (window.innerHeight - this.affix.current.getBoundingClientRect()["bottom"]) > this.props.bottomOffset) {
 					this.setState({
 						execBottomCallback: true
 					});
@@ -59,7 +59,7 @@ class Affix extends React.Component {
 
 	render() {
 		const prefixAffix = "mq-affix";
-		return <div className={`${prefixAffix}`} ref={this.affix}>
+		return <div className={prefixAffix} ref={this.affix}>
 			{this.props.children}
 		</div>;
 	}
@@ -75,8 +75,8 @@ Affix.propTypes = {
 };
 
 Affix.defaultProps = {
-	topOffset: -1,
-	bottomOffset: -1,
+	topOffset: undefined,
+	bottomOffset: undefined,
 	callback: function (type) {
 	}
 };

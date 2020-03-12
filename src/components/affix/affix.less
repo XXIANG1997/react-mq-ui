@@ -3,4 +3,9 @@
 .@{prefixAffix} {
   position: sticky;
   display: inline-flex;
+
+  // 默认情况所有最子元素的 margin 都会 reset 为 0。
+  > * {
+    margin: 0;
+  }
 }
