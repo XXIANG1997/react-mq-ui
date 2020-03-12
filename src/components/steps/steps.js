@@ -24,9 +24,10 @@ class Steps extends React.Component {
 		const stepClsPrefix = "mq-step";
 		const currentTwo = this.checkCurrent(current);
 
-		const content = React.Children.map(children, (child, index) => {
+		const content = children.map((child, index) => {
 			return React.cloneElement(child, {
-				active: index === currentTwo - 1
+				active: index === currentTwo - 1,
+				key: index
 			});
 		});
 
@@ -35,18 +36,20 @@ class Steps extends React.Component {
 				{
 					React.Children.map(children, (child, index) => {
 						const {text, description, icon} = child.props;
+						/** 三种状态 */
 						const isDone = index < currentTwo - 1;
 						const isActive = index === currentTwo - 1;
 						const isWait = index > currentTwo - 1;
 
 						let activeStatusIcon;
 						if (isActive) {
+							/** 如果有 status activeIcon 就是 status 的 Icon  */
 							if (status) {
 								activeStatusIcon = status;
 							} else {
+								/** 如果是 showLoading 状态 activeIcon 就是 loading 否则就是用户自定义的 Icon */
 								if (showLoading) {
 									activeStatusIcon = "loading";
-
 								} else {
 									activeStatusIcon = icon;
 								}
@@ -85,15 +88,18 @@ class Steps extends React.Component {
 							<div className={`${stepClsPrefix}-description`}>
 								{description}
 							</div>
-							{index !== 0 && <div className={`${stepClsPrefix}-line-wrapper`}>
-								<div className={`${stepClsPrefix}-line`}/>
-								<div className={`${stepClsPrefix}-active-line`}/>
-							</div>}
+							{
+								/** 每个 step 之间的连接线 */
+								index !== 0 && <div className={`${stepClsPrefix}-line-wrapper`}>
+									<div className={`${stepClsPrefix}-line`}/>
+									<div className={`${stepClsPrefix}-active-line`}/>
+								</div>
+							}
 						</li>;
 					})
 				}
 			</ul>
-			<div>
+			<div className={`have-${children.length}-child`}>
 				{content}
 			</div>
 		</div>;

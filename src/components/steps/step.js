@@ -2,21 +2,15 @@ import React from "react";
 import "./step.less";
 import PropTypes from "prop-types";
 
-class Step extends React.Component {
-	constructor(props) {
-		super(props);
-	}
-
-	render() {
-		const stepClsPrefix = "mq-step";
-		const {children, active} = this.props;
-		if (active && !!children) {
-			return <div className={`${stepClsPrefix}-content`}>
-				{children}
-			</div>;
-		} else {
-			return null;
-		}
+function Step(props) {
+	const stepClsPrefix = "mq-step";
+	const {children, active} = props;
+	if (active && !!children) {
+		return <div className={`${stepClsPrefix}-content`}>
+			{children}
+		</div>;
+	} else {
+		return <></>;
 	}
 }
 

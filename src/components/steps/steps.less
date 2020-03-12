@@ -1,22 +1,46 @@
 @stepsClsPrefix: mq-steps;
 @stepClsPrefix: mq-step;
 
+
 .@{stepsClsPrefix} {
-  max-width: 1200px;
   display: flex;
   flex-direction: column;
 
-  &.@{stepsClsPrefix}-small {
-    font-size: 14px;
+  .generateSizeAndFixLineTop(@type, @fontSize, @iconSize, @top) {
+    &.@{stepsClsPrefix}-@{type} {
+      font-size: @fontSize;
+
+      .@{stepsClsPrefix}-header {
+        .@{stepClsPrefix} {
+          .@{stepClsPrefix}-icon {
+            &.mq-icon {
+              font-size: @iconSize
+            }
+          }
+
+          .@{stepClsPrefix}-line-wrapper {
+            top: @top;
+          }
+        }
+
+      }
+    }
   }
 
-  &.@{stepsClsPrefix}-medium {
-    font-size: 18px;
+  .generateSizeAndFixLineTop(small, 14px, 25px, 12px);
+  .generateSizeAndFixLineTop(medium, 18px, 30px, 14.5px);
+  .generateSizeAndFixLineTop(large, 22px, 35px, 17px);
+
+  .content-width(@i) when (@i > 1) {
+    .have-@{i}-child {
+      .@{stepClsPrefix}-content {
+        width: (@i - 1) * (1 / @i) * 100%;
+      }
+    }
+    .content-width(@i - 1)
   }
 
-  &.@{stepsClsPrefix}-large {
-    font-size: 22px;
-  }
+  .content-width(10);
 
   .@{stepsClsPrefix}-header {
     margin: 0;
@@ -44,14 +68,6 @@
       position: relative;
       line-height: 2;
 
-      .@{stepClsPrefix}-icon {
-        z-index: 10;
-
-        &.mq-icon {
-          font-size: 30px;
-        }
-      }
-
       .@{stepClsPrefix}-description {
         width: 95%;
         word-break: break-all;
@@ -64,7 +80,7 @@
         position: absolute;
         background-color: #e8e8e8;
         height: 1px;
-        top: 13px;
+        top: 14.5px;
         left: -50%;
 
         .@{stepClsPrefix}-line {
@@ -74,7 +90,6 @@
           transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1)
         }
       }
-
 
       &.@{stepClsPrefix}-active {
         // active 状态下各种文本的颜色
