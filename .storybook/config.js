@@ -10,6 +10,7 @@ addDecorator(withInfo({
 function loadStories() {
 	require("../src/stories/basic.stories.js");
 	require("../src/stories/navigation.stories.js");
+	require("../src/stories/dataEntry.stories.js");
 }
 
 configure(loadStories, module);
