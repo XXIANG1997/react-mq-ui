@@ -1,0 +1,172 @@
+@import "../../assets/css/basic.less";
+
+@inputPrefix: mq-input;
+
+.@{inputPrefix}-wrapper {
+  display: flex;
+  margin: 10px 0;
+  font-size: 14px;
+  align-items: center;
+
+  .mq-button-size(@type, @fontSize, @height, @paddingRightAndLeft) {
+    &.@{inputPrefix}-@{type} {
+      font-size: @fontSize;
+      height: @height;
+
+      .@{inputPrefix}-inner-wrapper {
+        .@{inputPrefix}-suffix {
+          right: (@paddingRightAndLeft+ 1px) / 2;
+        }
+
+        .@{inputPrefix} {
+          &.have-after-icon {
+            padding-right: @paddingRightAndLeft;
+          }
+        }
+      }
+
+      .@{inputPrefix}-inner-wrapper {
+        .@{inputPrefix}-prefix {
+          left: (@paddingRightAndLeft + 1px) / 2;
+        }
+
+        .@{inputPrefix} {
+          &.have-before-icon {
+            padding-left: @paddingRightAndLeft;
+          }
+        }
+      }
+    }
+  }
+
+  .mq-button-size(small, 14px, 30px, 25px);
+  .mq-button-size(medium, 18px, 35px, 30px);
+  .mq-button-size(large, 22px, 40px, 35px);
+
+  .@{inputPrefix}-addonBefore {
+    background-color: #FAFAFA;
+    height: 100%;
+    display: inline-flex;
+    align-items: center;
+    padding: 0.2em 0.5em;
+    box-sizing: border-box;
+    color: rgba(0, 0, 0, 0.65);
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    border: 1px solid #e8e8e8;
+    border-right: none;
+    user-select: none;
+  }
+
+  .@{inputPrefix}-addonAfter {
+    background-color: #FAFAFA;
+    height: 100%;
+    display: inline-flex;
+    align-items: center;
+    padding: 0.1em 0.5em;
+    box-sizing: border-box;
+    color: rgba(0, 0, 0, 0.65);
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border: 1px solid #e8e8e8;
+    border-left: none;
+    user-select: none;
+  }
+
+
+  .@{inputPrefix}-inner-wrapper {
+    height: 100%;
+    position: relative;
+
+
+    .@{inputPrefix} {
+      border: 1px solid #e8e8e8;
+      height: 100%;
+      border-radius: 4px;
+      color: rgba(0, 0, 0, 0.65);
+      box-sizing: border-box;
+      padding: 0.1em 0.5em;
+      transition: all 0.4s;
+      outline: none;
+
+      &.have-prev-brother {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+
+      &.have-next-brother {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+
+      &:disabled {
+        background-color: #f5f5f5;
+        cursor: not-allowed;
+        border-color: #f5f5f5;
+        box-shadow: none;
+        color: #7a7a7a;
+      }
+
+      &:not(:disabled) {
+        &:hover, &:focus, &:active {
+          border-color: #3273dc;
+          box-shadow: 0 0 0 0.125em rgba(50, 115, 220, .25);
+        }
+      }
+
+      &::placeholder {
+        color: rgb(178, 178, 178);
+      }
+    }
+
+    @keyframes mq-zoom-in {
+      0% {
+        transform: scale(0);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    .@{inputPrefix}-prefix {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      top: 50% + 1px;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .@{inputPrefix}-suffix {
+      position: absolute;
+      transform: translate(50%, -50%);
+      top: 50% + 1px;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+
+      .is-showPassword-icon {
+        cursor: pointer;
+      }
+
+      .is-clear-icon {
+        &.mq-icon {
+          transition: opacity 0.5s;
+          animation: mq-zoom-in 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+          cursor: pointer;
+          opacity: .5;
+
+          &:hover {
+            opacity: 1;
+          }
+        }
+      }
+    }
+
+    .mq-icon {
+      color: rgba(0, 0, 0, 0.65);
+    }
+
+  }
+}
