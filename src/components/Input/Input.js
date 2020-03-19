@@ -65,33 +65,33 @@ class Input extends React.Component {
 						<use xlinkHref={`#icon-${prefix}`}/>
 					</svg>
 			</span>;
-		}
-
-		if (showPassword && type === "password") {
-			return <span className={`${inputPrefix}-suffix`}>
+		} else {
+			if (showPassword && type === "password") {
+				return <span className={`${inputPrefix}-suffix`}>
 					<svg onClick={this.triggerPasswordIcon} className={"mq-icon is-showPassword-icon"}
 					     aria-hidden="true">
 						<use xlinkHref={`#icon-${showCloseEye ? "close-eye" : "eye"}`}/>
 					</svg>
 			</span>;
-		}
+			}
 
-		if (allowClear) {
-			return (typeof value === "number" ? true : value) && allowClear &&
-				<span className={`${inputPrefix}-suffix`}>
+			if (allowClear) {
+				return (typeof value === "number" ? true : value) &&
+					<span className={`${inputPrefix}-suffix`}>
 					<svg onClick={this.clearValue} className={"mq-icon is-clear-icon"}
 					     aria-hidden="true">
 						<use xlinkHref={"#icon-clear"}/>
 					</svg>
 				</span>;
-		}
+			}
 
-		if (suffix) {
-			return <span className={`${inputPrefix}-suffix`}>
+			if (suffix) {
+				return <span className={`${inputPrefix}-suffix`}>
 					<svg className={"mq-icon"} aria-hidden="true">
 						<use xlinkHref={`#icon-${suffix}`}/>
 					</svg>
 			</span>;
+			}
 		}
 	};
 
@@ -120,7 +120,7 @@ class Input extends React.Component {
 			<div className={`${inputPrefix}-inner-wrapper`}>
 				{this.renderIcon(inputPrefix, prefix)}
 				<input onChange={this._onChange} style={{"width": width + "px"}} {...attrs} />
-				{this.renderIcon(inputPrefix, prefix, suffix, showPassword, type, showCloseEye, allowClear, value)}
+				{this.renderIcon(inputPrefix, undefined, suffix, showPassword, type, showCloseEye, allowClear, value)}
 			</div>
 			{this.renderAddon(addonAfter, "after", inputPrefix)}
 		</div>;
