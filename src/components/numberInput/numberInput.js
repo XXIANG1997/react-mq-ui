@@ -41,6 +41,9 @@ class NumberInput extends React.Component {
 		} else {
 			formattedValue = valueToString.replace(/[^\d|\\.]/g, "");
 		}
+		if (formattedValue === "") {
+			return "";
+		}
 		let splitValue = formattedValue.split(".").slice(0, 2);
 
 		if (Number(formattedValue) < min) {
@@ -169,7 +172,7 @@ class NumberInput extends React.Component {
 	};
 
 	render() {
-		const {disabled, showStepper, size, step, max, min, getValue} = this.props;
+		const {disabled, showStepper, size, step, max, min, getValue, placeholder} = this.props;
 		const {beforeDisabled, afterDisabled} = this.state;
 		const numberInput = "mq-number-input";
 		const beforeBtnCls = cls(
@@ -208,7 +211,9 @@ class NumberInput extends React.Component {
 			<input type="text" className={inputCls}
 			       onChange={this.onChange}
 			       value={this.state.value}
-			       disabled={disabled}/>
+			       placeholder={placeholder}
+			       disabled={disabled}
+			/>
 			{
 				showStepper &&
 				<button className={afterBtnCls} disabled={afterDisabled || disabled}
@@ -224,6 +229,8 @@ NumberInput.propTypes = {
 		PropTypes.number,
 		PropTypes.string
 	]),
+	/** 提示文字 */
+	placeholder: PropTypes.string,
 	/** 是否禁用 */
 	disabled: PropTypes.bool,
 	/** 限定小数位 */
@@ -244,6 +251,7 @@ NumberInput.propTypes = {
 
 NumberInput.defaultProps = {
 	value: "",
+	placeholder: "",
 	disabled: false,
 	decimal: 4,
 	step: 1,

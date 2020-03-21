@@ -2,6 +2,7 @@
 
 .@{numberInputPrefix}-wrapper {
   display: inline-flex;
+  margin: 0 10px;
 
   &.@{numberInputPrefix}-small {
     .@{numberInputPrefix} {
@@ -46,6 +47,10 @@
     padding: 0.1em 0.5em;
     transition: all 0.4s;
     outline: none;
+
+    &::placeholder {
+      color: rgb(178, 178, 178);
+    }
 
     &:disabled {
       cursor: not-allowed;
