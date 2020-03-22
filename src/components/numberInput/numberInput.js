@@ -37,6 +37,15 @@ class NumberInput extends React.Component {
 		}
 	};
 
+	UNSAFE_componentWillReceiveProps(nextProps, nextContext) {
+		const {decimal, max, min} = this.props;
+		if (this.state.value !== nextProps.value) {
+			this.setState({
+				value: this.formatValue(nextProps.value, decimal, max, min)
+			});
+		}
+	}
+
 	formatValue(value, decimal, max, min) {
 		let allZero = false;
 		let formattedValue = this.reUnlessNum(value);
@@ -54,17 +63,16 @@ class NumberInput extends React.Component {
 
 		let splitValue = formattedValue.split(".").slice(0, 2);
 
+		if (splitValue.length === 1 && (splitValue[0] === "+" || splitValue[0] === "-")) return "";
+
 		/** 小数点前半部分处理 */
 
-		if (splitValue[0] === "-0") {
-			splitValue[0] = "-0";
+		if (splitValue[0].substring(0, 1) === "-") {
+			splitValue[0] = "-" + Number(splitValue[0].substring(1));
+		} else if (splitValue[0].substring(0, 1) === "+" && splitValue[0].length === 1) {
+			splitValue[0] = "0";
 		} else {
-			if (splitValue[0] === "+" || splitValue[0] === "-") {
-				/** + => "" - => "" */
-				return "";
-			} else {
-				splitValue[0] = Number(splitValue[0]).toString();
-			}
+			splitValue[0] = Number(splitValue[0]);
 		}
 
 		/** 小数点后半部分处理 */
@@ -155,9 +163,7 @@ class NumberInput extends React.Component {
 	};
 
 	onStep = (step, max, min, getValue, decimal) => {
-		console.log(this.state.value);
 		let formatValue = Number(this.formatValue(this.state.value, decimal, max, min));
-		console.log(formatValue);
 		this.showClearIcon(true);
 		if (NP.plus(formatValue, step) < min) {
 			this.setState({
