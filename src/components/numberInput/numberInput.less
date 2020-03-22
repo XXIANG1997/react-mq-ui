@@ -1,12 +1,29 @@
 @numberInputPrefix: mq-number-input;
+@import "../../assets/css/basic.less";
 
 .@{numberInputPrefix}-wrapper {
   display: inline-flex;
   margin: 0 10px;
 
   &.@{numberInputPrefix}-small {
-    .@{numberInputPrefix} {
-      height: 40px;
+    font-size: 16px;
+    .@{numberInputPrefix}-inner-wrapper {
+      .@{numberInputPrefix} {
+        height: 40px;
+        width: 100px;
+
+        &.have-clear-icon {
+          padding-right: 26px;
+        }
+      }
+
+      .@{numberInputPrefix}-icon-wrapper {
+        right: 14px;
+
+        .mq-icon {
+          font-size: 16px;
+        }
+      }
     }
 
     .@{numberInputPrefix}-stepper {
@@ -16,8 +33,24 @@
   }
 
   &.@{numberInputPrefix}-medium {
-    .@{numberInputPrefix} {
-      height: 50px;
+    font-size: 18px;
+    .@{numberInputPrefix}-inner-wrapper {
+      .@{numberInputPrefix} {
+        height: 50px;
+        width: 120px;
+
+        &.have-clear-icon {
+          padding-right: 28px;
+        }
+      }
+
+      .@{numberInputPrefix}-icon-wrapper {
+        right: 14px;
+
+        .mq-icon {
+          font-size: 18px;
+        }
+      }
     }
 
     .@{numberInputPrefix}-stepper {
@@ -27,8 +60,24 @@
   }
 
   &.@{numberInputPrefix}-large {
-    .@{numberInputPrefix} {
-      height: 60px;
+    font-size: 20px;
+    .@{numberInputPrefix}-inner-wrapper {
+      .@{numberInputPrefix} {
+        height: 60px;
+        width: 140px;
+
+        &.have-clear-icon {
+          padding-right: 30px;
+        }
+      }
+
+      .@{numberInputPrefix}-icon-wrapper {
+        right: 16px;
+
+        .mq-icon {
+          font-size: 20px;
+        }
+      }
     }
 
     .@{numberInputPrefix}-stepper {
@@ -37,35 +86,69 @@
     }
   }
 
-  .@{numberInputPrefix} {
-    border: 1px solid #e8e8e8;
-    width: 100px;
-    height: 40px;
-    border-radius: 4px;
-    color: rgba(0, 0, 0, 0.65);
-    box-sizing: border-box;
-    padding: 0.1em 0.5em;
-    transition: all 0.4s;
-    outline: none;
+  .@{numberInputPrefix}-inner-wrapper {
+    position: relative;
 
-    &::placeholder {
-      color: rgb(178, 178, 178);
-    }
+    .@{numberInputPrefix}-icon-wrapper {
+      position: absolute;
+      top: 50% + 1px;
+      transform: translate(50%, -50%);
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
 
-    &:disabled {
-      cursor: not-allowed;
-    }
+      @keyframes mq-zoom-in {
+        0% {
+          transform: scale(0);
+        }
 
-    &:not(:disabled) {
-      &:hover, &:focus, &:active {
-        border-color: #3273dc;
-        box-shadow: 0 0 0 0.125em rgba(50, 115, 220, .25);
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      .mq-icon {
+        color: rgba(0, 0, 0, 0.65);
+        transition: opacity 0.5s;
+        cursor: pointer;
+        animation: mq-zoom-in 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+        opacity: .5;
+
+        &:hover {
+          opacity: 1;
+        }
       }
     }
 
+    .@{numberInputPrefix} {
+      border: 1px solid #e8e8e8;
+      box-sizing: border-box;
+      vertical-align: middle;
+      padding-left: 20px;
+      padding-right: 20px;
+      border-radius: 4px;
+      color: rgba(0, 0, 0, 0.65);
+      transition: all 0.4s;
+      outline: none;
 
-    &.have-stepper {
-      border-radius: 0;
+      &::placeholder {
+        color: rgb(178, 178, 178);
+      }
+
+      &:disabled {
+        cursor: not-allowed;
+      }
+
+      &:not(:disabled) {
+        &:hover, &:focus, &:active {
+          border-color: #3273dc;
+          box-shadow: 0 0 0 0.125em rgba(50, 115, 220, .25);
+        }
+      }
+
+      &.have-stepper {
+        border-radius: 0;
+      }
     }
   }
 

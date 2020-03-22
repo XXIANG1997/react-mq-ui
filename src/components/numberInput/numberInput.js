@@ -10,7 +10,8 @@ class NumberInput extends React.Component {
 		this.state = {
 			value: this.formatValue(value, decimal, max, min),
 			beforeDisabled: false,
-			afterDisabled: false
+			afterDisabled: false,
+			clearIcon: false
 		};
 	}
 
@@ -21,6 +22,9 @@ class NumberInput extends React.Component {
 	init = () => {
 		const {max, min} = this.props;
 		const {value} = this.state;
+		if (value) {
+			this.showClearIcon(true);
+		}
 		if (value === max) {
 			this.setState({
 				afterDisabled: true
@@ -34,57 +38,41 @@ class NumberInput extends React.Component {
 	};
 
 	formatValue(value, decimal, max, min) {
-		let formattedValue;
-		const valueToString = value.toString();
-		if (valueToString.slice(0, 1) === "+" || valueToString.slice(0, 1) === "-") {
-			formattedValue = valueToString.slice(0, 1) + valueToString.replace(/[^\d|\\.]/g, "");
-		} else {
-			formattedValue = valueToString.replace(/[^\d|\\.]/g, "");
-		}
+		let allZero = false;
+		let formattedValue = this.reUnlessNum(value);
+		/** 空字符直接返回 */
+
 		if (formattedValue === "") {
 			return "";
 		}
+		/** 检查设置的值大（小）于限定值 */
+
+		const result = this.showWarn(formattedValue, max, min);
+		if (result === max || result === min) return result;
+
+		/** 去除多余部分 11.1111.111 => 11.1111 */
+
 		let splitValue = formattedValue.split(".").slice(0, 2);
 
-		if (Number(formattedValue) < min) {
-			console.warn(`你设置的值（${Number(formattedValue)}）小于最小可显示的值，已帮你设置为最小可显示的值（${min}）。`);
-			return min;
-		}
+		/** 小数点前半部分处理 */
 
-		if (Number(formattedValue) > max) {
-			console.warn(`你设置的值（${Number(formattedValue)}）大于最大可设置的值，已帮你设置为最大可显示的值（${max}）。`);
-			return max;
-		}
-
-		let allZero = false;
-
-		// .111 => 0.111
-		if (splitValue[0] === "") {
-			splitValue[0] = "0";
-		}
-
-		// 0000.111 => 0.111
-		// 000111.111 => 111.111
-		if (splitValue[0].length > 1) {
-			for (let i = 0; i < splitValue[0].length; i++) {
-				if (splitValue[0][i] !== "0") {
-					splitValue[0] = splitValue[0].substring(i);
-					break;
-				}
-				if (i === splitValue[0].length - 1) {
-					allZero = true;
-				}
+		if (splitValue[0] === "-0") {
+			splitValue[0] = "-0";
+		} else {
+			if (splitValue[0] === "+" || splitValue[0] === "-") {
+				/** + => "" - => "" */
+				return "";
+			} else {
+				splitValue[0] = Number(splitValue[0]).toString();
 			}
 		}
-		if (allZero) {
-			splitValue[0] = "0";
-			allZero = false;
-		}
+
+		/** 小数点后半部分处理 */
 
 		if (splitValue[1] === "" || splitValue[1] === "0") {
 			splitValue = [splitValue[0]];
 		}
-		if (splitValue[1] && splitValue[1].length > decimal) {
+		if (decimal && splitValue[1] && splitValue[1].length > decimal) {
 			splitValue[1] = splitValue[1].substring(0, decimal);
 		}
 		// 0.0000 => 0.0
@@ -100,13 +88,102 @@ class NumberInput extends React.Component {
 		}
 		if (allZero) {
 			splitValue[1] = "0";
-			allZero = false;
 		}
+
+		////////////////////////////////////////////////////////////////////
 
 		return splitValue.join(".");
 	}
 
+	showClearIcon = (bool) => {
+		this.setState({
+			clearIcon: bool
+		});
+	};
+
 	formatChangeValue = (value, decimal, max, min, getValue) => {
+		let formattedValue = this.reUnlessNum(value);
+
+		/** 一旦有值显示 clearIcon */
+
+		if (formattedValue) {
+			this.showClearIcon(true);
+		} else {
+			this.showClearIcon(false);
+		}
+
+		/** 检查设置的值大（小）于限定值 */
+
+		const result = this.showWarn(formattedValue, max, min);
+
+		if (result === max) {
+			getValue(max);
+			this.setState({
+				afterDisabled: true
+			});
+			return result;
+		}
+
+		if (result === min) {
+			getValue(min);
+			this.setState({
+				beforeDisabled: true
+			});
+			return result;
+		}
+
+		/** 去除多余部分 111.111.111 => 111.111 */
+
+		const splitValue = formattedValue.split(".").slice(0, 2);
+
+		// ['111', ''] => '111.'
+
+		if (splitValue[1] === "") {
+			return splitValue[0] + ".";
+		}
+
+		// limit decimal
+
+		if (decimal && splitValue[1] && splitValue[1].length > decimal) {
+			splitValue[1] = splitValue[1].substring(0, decimal);
+		}
+
+		/** 触发取值回调 */
+
+		getValue(Number(splitValue.join(".")));
+		return splitValue.join(".");
+	};
+
+	onStep = (step, max, min, getValue, decimal) => {
+		console.log(this.state.value);
+		let formatValue = Number(this.formatValue(this.state.value, decimal, max, min));
+		console.log(formatValue);
+		this.showClearIcon(true);
+		if (NP.plus(formatValue, step) < min) {
+			this.setState({
+				beforeDisabled: true
+			});
+			return;
+		}
+
+		if (NP.plus(formatValue, step) > max) {
+			this.setState({
+				afterDisabled: true
+			});
+			return;
+		}
+
+		const value = NP.plus(formatValue, step);
+		getValue(value);
+		this.setState({
+			value,
+			beforeDisabled: false,
+			afterDisabled: false,
+		}, () => {
+		});
+	};
+
+	reUnlessNum = (value) => {
 		const valueToString = value.toString();
 		let formattedValue;
 		if (valueToString.slice(0, 1) === "+" || valueToString.slice(0, 1) === "-") {
@@ -114,54 +191,7 @@ class NumberInput extends React.Component {
 		} else {
 			formattedValue = value.toString().replace(/[^\d|\\.]/g, "");
 		}
-		if (Number(formattedValue) < min) {
-			console.warn(`你设置的值（${Number(formattedValue)}）小于最小可显示的值，已帮你设置为最小可显示的值（${min}）。`);
-			this.setState({
-				beforeDisabled: true
-			});
-			getValue(min);
-			return min;
-		}
-		if (Number(formattedValue) > max) {
-			getValue(max);
-			console.warn(`你设置的值（${Number(formattedValue)}）大于最大可显示的值，已帮你设置为最大可显示的值（${max}）。`);
-			this.setState({
-				afterDisabled: true
-			});
-			return max;
-		}
-		const splitValue = formattedValue.split(".").slice(0, 2);
-		// ['111', ''] => '111.'
-		if (splitValue[1] === "") {
-			return splitValue[0] + ".";
-		}
-		// limit decimal
-		if (splitValue[1] && splitValue[1].length > decimal) {
-			splitValue[1] = splitValue[1].substring(0, decimal);
-		}
-		getValue(Number(splitValue.join(".")));
-		return splitValue.join(".");
-	};
-
-	onStep = (step, max, min, getValue) => {
-		let formatValue = Number(this.formatValue(this.state.value));
-		if (NP.plus(formatValue, step) < min) {
-			this.setState({
-				beforeDisabled: true
-			});
-		} else if (NP.plus(formatValue, step) > max) {
-			this.setState({
-				afterDisabled: true
-			});
-		} else {
-			const value = NP.plus(formatValue, step);
-			getValue(value);
-			this.setState({
-				value,
-				beforeDisabled: false,
-				afterDisabled: false
-			});
-		}
+		return formattedValue;
 	};
 
 	onChange = (e) => {
@@ -171,9 +201,30 @@ class NumberInput extends React.Component {
 		});
 	};
 
+	onClean = () => {
+		this.setState({
+			value: "",
+			beforeDisabled: false,
+			afterDisabled: false
+		});
+		this.showClearIcon(false);
+	};
+
+	showWarn = (value, max, min) => {
+		if (Number(value) < min) {
+			console.warn(`你设置的值（${Number(value)}）小于最小可显示的值，已帮你设置为最小可显示的值（${min}）。`);
+			return min;
+		}
+
+		if (Number(value) > max) {
+			console.warn(`你设置的值（${Number(value)}）大于最大可设置的值，已帮你设置为最大可显示的值（${max}）。`);
+			return max;
+		}
+	};
+
 	render() {
-		const {disabled, showStepper, size, step, max, min, getValue, placeholder} = this.props;
-		const {beforeDisabled, afterDisabled} = this.state;
+		const {disabled, showStepper, size, step, max, min, getValue, placeholder, allowClear, decimal} = this.props;
+		const {beforeDisabled, afterDisabled, clearIcon} = this.state;
 		const numberInput = "mq-number-input";
 		const beforeBtnCls = cls(
 			"before",
@@ -192,7 +243,8 @@ class NumberInput extends React.Component {
 		const inputCls = cls(
 			{
 				[`${numberInput}`]: true,
-				"have-stepper": showStepper
+				"have-stepper": showStepper,
+				"have-clear-icon": allowClear
 			}
 		);
 		const inputWrapCls = cls(
@@ -206,18 +258,25 @@ class NumberInput extends React.Component {
 			{
 				showStepper &&
 				<button className={beforeBtnCls} disabled={beforeDisabled || disabled}
-				        onClick={() => this.onStep(-step, max, min, getValue)}>-</button>
+				        onClick={() => this.onStep(-step, max, min, getValue, decimal)}>-</button>
 			}
-			<input type="text" className={inputCls}
-			       onChange={this.onChange}
-			       value={this.state.value}
-			       placeholder={placeholder}
-			       disabled={disabled}
-			/>
+			<div className={`${numberInput}-inner-wrapper`}>
+				<input type="text" className={inputCls}
+				       onChange={this.onChange}
+				       value={this.state.value}
+				       placeholder={placeholder}
+				       disabled={disabled}
+				/>
+				{allowClear && clearIcon && <span className={`${numberInput}-icon-wrapper`}>
+					<svg className={"mq-icon"} onClick={this.onClean} aria-hidden="true">
+						<use xlinkHref={"#icon-clear"}/>
+					</svg>
+				</span>}
+			</div>
 			{
 				showStepper &&
 				<button className={afterBtnCls} disabled={afterDisabled || disabled}
-				        onClick={() => this.onStep(+step, max, min, getValue)}>+</button>
+				        onClick={() => this.onStep(+step, max, min, getValue, decimal)}>+</button>
 			}
 		</div>;
 	}
@@ -231,6 +290,8 @@ NumberInput.propTypes = {
 	]),
 	/** 提示文字 */
 	placeholder: PropTypes.string,
+	/** 清理按钮 */
+	allowClear: PropTypes.bool,
 	/** 是否禁用 */
 	disabled: PropTypes.bool,
 	/** 限定小数位 */
@@ -253,7 +314,8 @@ NumberInput.defaultProps = {
 	value: "",
 	placeholder: "",
 	disabled: false,
-	decimal: 4,
+	allowClear: false,
+	decimal: 100,
 	step: 1,
 	showStepper: false,
 	max: Infinity,
