@@ -4,8 +4,7 @@ import RadioGroup from "./radioGroup";
 import "./radio.less";
 import "./radioGroup.less";
 
-const MqRadio = Radio;
 const MqRadioGroup = RadioGroup;
-MqRadioGroup.Item = MqRadio;
+MqRadioGroup.Item = Radio;
 
 export default MqRadioGroup;
