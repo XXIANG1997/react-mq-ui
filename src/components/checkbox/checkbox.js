@@ -66,7 +66,7 @@ Checkbox.propTypes = {
 	indeterminate: PropTypes.bool,
 	/** 变化时回调函数 */
 	onChange: PropTypes.func,
-	/** 禁用 */
+	/** 失效 */
 	disabled: PropTypes.bool,
 	/** 大小 */
 	size: PropTypes.oneOf(["small", "medium", "large"]),
