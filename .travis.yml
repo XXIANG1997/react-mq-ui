@@ -6,3 +6,5 @@ cache:
     - node_modules
 script:
   - npm test
+  - npm build-storybook
+  - npm deploy-storybook
