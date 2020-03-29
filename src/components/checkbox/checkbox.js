@@ -11,8 +11,6 @@ class Checkbox extends React.Component {
 	UNSAFE_componentWillReceiveProps(nextProps, nextContext) {
 		if (nextProps.indeterminate !== this.props.indeterminate) {
 			this.input.current.indeterminate = nextProps.indeterminate;
-		} else {
-			this.input.current.indeterminate = this.props.indeterminate;
 		}
 	}
 
@@ -25,7 +23,7 @@ class Checkbox extends React.Component {
 	handleChange = (e) => {
 		const {disabled} = this.props;
 		!disabled && this.props.onChange(e);
-		this.input.current.inedterminate = this.props.indeterminate;
+		this.input.current.indeterminate = this.props.indeterminate;
 	};
 
 	render() {
@@ -46,7 +44,7 @@ class Checkbox extends React.Component {
 			}
 		);
 		// 判断是否有 value
-		value && (checkboxAttr["value"] = value);
+		(value !== undefined) && (checkboxAttr["value"] = value);
 		// 判断是否有 checked 有则变成受控组件
 		(checked !== undefined) && (checkboxAttr["checked"] = checked);
 		// 只有在没有指定 checked 属性的时候，才能设置 defaultChecked（非受控）
