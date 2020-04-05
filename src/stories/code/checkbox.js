@@ -11,8 +11,6 @@ const Checkbox = () => {
 		<MqCheckbox checked={checked1} onChange={(e) => onChange1(e.target.checked)}>banana(control)</MqCheckbox>
 		<MqCheckbox indeterminate={true}>indeterminate(only control
 			style)</MqCheckbox>
-		{/*<MqCheckbox.Group options={this.state.options} defaultValue={["apple", "orange"]}*/}
-		{/*                  onChange={(value) => console.log(value)}/>*/}
 		<h2>checkbox group</h2>
 		<h3>unControl</h3>
 		<MqCheckbox.Group options={["apple", "orange", "grape", "tomato"]} defaultValue={["apple"]}
