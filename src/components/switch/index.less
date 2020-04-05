@@ -1,0 +1,138 @@
+@import '../styles/vars.less';
+@import '../styles/common.less';
+@import '../styles/animate.less';
+
+.@{mq-switch-cls-prefix} {
+  position: relative;
+  display: inline-flex;
+  border-radius: 100px;
+  cursor: pointer;
+  overflow: hidden;
+
+  &-disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  &-small {
+    width: 44px;
+    height: 26px;
+    font-size: 12px;
+
+    .@{mq-switch-cls-prefix}-inner {
+      height: 18px;
+      width: 18px;
+      top: 4px;
+      right: 4px;
+    }
+
+    .@{mq-switch-cls-prefix}-slider {
+      top: 4px;
+      left: 4px;
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  &-medium {
+    width: 52px;
+    height: 30px;
+    font-size: 14px;
+
+    .@{mq-switch-cls-prefix}-inner {
+      height: 22px;
+      width: 22px;
+      top: 4px;
+      right: 4px;
+    }
+
+    .@{mq-switch-cls-prefix}-slider {
+      top: 4px;
+      left: 4px;
+      width: 22px;
+      height: 22px;
+    }
+  }
+
+  &-large {
+    width: 60px;
+    height: 34px;
+    font-size: 16px;
+
+    .@{mq-switch-cls-prefix}-inner {
+      height: 26px;
+      width: 26px;
+      top: 4px;
+      right: 4px;
+    }
+
+    .@{mq-switch-cls-prefix}-slider {
+      top: 4px;
+      left: 4px;
+      width: 26px;
+      height: 26px;
+    }
+  }
+
+  input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .@{mq-switch-cls-prefix}-background {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgb(204, 204, 204);
+    transition: all .4s;
+  }
+
+  input:checked ~ .@{mq-switch-cls-prefix}-background {
+    background-color: #2196F3;
+  }
+
+  .@{mq-switch-cls-prefix}-inner {
+    position: absolute;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    user-select: none;
+    transition: all .4s;
+  }
+
+  input:checked ~ .@{mq-switch-cls-prefix}-inner {
+    transform: translateX(-100%);
+  }
+
+  .@{mq-switch-cls-prefix}-slider {
+    position: absolute;
+    border-radius: 100px;
+    background-color: white;
+    transition: all .4s;
+
+    &-loading-wrapper {
+      position: absolute;
+      justify-content: center;
+      align-items: center;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+
+      .mq-icon {
+        color: rgba(0, 0, 0, 0.25);
+        animation: 2s loading linear infinite;
+      }
+    }
+  }
+
+  input:checked ~ .@{mq-switch-cls-prefix}-slider {
+    transform: translateX(100%);
+  }
+}
+
