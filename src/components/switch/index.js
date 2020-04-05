@@ -66,19 +66,27 @@ export default class Index extends React.Component {
 }
 
 Index.propTypes = {
+	/** 初始是否选中 */
 	defaultChecked: PropTypes.bool,
+	/** 指定当前是否选中（control mode） */
 	checked: PropTypes.bool,
+	/** 变化时回调函数 */
 	onChange: PropTypes.func,
+	/** 加载中 */
 	loading: PropTypes.bool,
+	/** 是否禁用 */
 	disabled: PropTypes.bool,
+	/** 选中时的内容 */
 	checkedChildren: PropTypes.oneOfType([
 		PropTypes.string,
 		PropTypes.number
 	]),
+	/** 未选中时的内容 */
 	unCheckedChildren: PropTypes.oneOfType([
 		PropTypes.string,
 		PropTypes.number
 	]),
+	/** 大小 */
 	size: PropTypes.oneOf(["small", "medium", "large"])
 };
 
